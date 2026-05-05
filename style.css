@@ -351,14 +351,13 @@ body.easter-egg-mode h3 {
 /* ------------------------ */
 
 /* --- SECRET VAULT (SCRAPBOOK) STYLES --- */
-.vault-hidden {
-    display: none;
-    opacity: 0;
+#secret-vault {
+    display: none; /* Hide it completely by default! */
 }
 
 /* When the vault is active, we basically cover the whole screen */
 #secret-vault.vault-active {
-    display: block;
+    display: block !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -512,15 +511,67 @@ body.easter-egg-mode h3 {
 .photo-placeholder {
     width: 100%;
     height: 280px; 
-    /* Soft dark background before the photo loads to contrast the white frame */
     background-color: #1a1a24; 
     background-size: contain; 
     background-repeat: no-repeat; 
     background-position: center bottom; 
     border: none; 
-    border-radius: 4px; /* Matches the softer frame */
+    border-radius: 4px; 
     margin-bottom: 20px;
+
+    /* --- Anti-Screenshot & Interactions --- */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none; /* Prevents selecting/dragging on Safari/iOS */
+    -webkit-touch-callout: none; /* Prevents long-press save photo on iOS */
+    pointer-events: auto;
 }
+
+/* Make images zoom slightly when hovered so user knows they are clickable */
+.photo-placeholder:hover {
+    transform: scale(1.03);
+}
+
+/* Fullscreen Modal/Lightbox Image */
+#image-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 100000;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal.modal-active {
+    display: flex;
+}
+
+#modal-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 5px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    /* Prevents saving the image */
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+}
+
+#close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+/* --------------------------------------- */
 
 .caption {
     color: #111; 

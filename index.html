@@ -107,7 +107,7 @@
     <!-- ========================================== -->
     <!-- THE SECRET VAULT (PERSONAL SCRAPBOOK)      -->
     <!-- ========================================== -->
-    <div id="secret-vault" class="vault-hidden">
+    <div id="secret-vault">
         <button id="close-vault" class="btn-glow">Return</button>
 
         <div class="vault-header">
@@ -251,21 +251,26 @@
                 </div>
             </div>
                 <!-- The Squad Video -->
-                <div class="polaroid polaroid-wide">
-                    <div class="photo-placeholder video-wrapper">
-                        <!-- Ensure the video is named homies.mp4 -->
-                        <video controls preload="metadata" class="homies-video">
-                            <source src="homies.mp4" type="video/mp4">
-                        </video>
+                            <div class="polaroid polaroid-wide">
+                                <div class="photo-placeholder video-wrapper">
+                                    <video controls preload="metadata" class="homies-video">
+                                        <source src="homies.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="caption">
+                                    <h3>The Homies</h3>
+                                    <p>Good times, pure chaos, and legendary moments.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="caption">
-                        <h3>The Homies</h3>
-                        <p>Good times, pure chaos, and legendary moments.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+                    <!-- Fullscreen Image Viewer Modal -->
+                    <div id="image-modal">
+                        <button id="close-modal">&times;</button>
+                        <img id="modal-img" src="" alt="Enlarged Photo">
+                    </div>
+
+                    <script src="script.js"></script>
+                </body>
+                </html>

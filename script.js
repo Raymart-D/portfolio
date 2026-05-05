@@ -111,7 +111,58 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeVaultBtn && secretVault) {
         closeVaultBtn.addEventListener('click', () => {
             secretVault.classList.remove('vault-active');
-            document.body.style.overflow = 'auto'; // allow scrolling again
+            document.body.style.overflow = 'auto'; 
         });
+    }
+
+    // --- FULLSCREEN IMAGE VIEWER & ANTI-SAVE ---
+    const imageModal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeModal = document.getElementById('close-modal');
+
+    // Prevent right click on all photos in the scrapbook
+    const allPhotos = document.querySelectorAll('.photo-placeholder');
+    allPhotos.forEach(photo => {
+        photo.addEventListener('contextmenu', (e) => {
+            e.preventDefault(); // Disables right click menu (Anti-Save)
+        });
+
+        // Click to enlarge (if it's a div with background-image)
+        photo.addEventListener('click', () => {
+            let src = "";
+            // Check if it's an img tag or a div with background-image
+            if (photo.tagName.toLowerCase() === 'img') {
+                src = photo.src;
+            } else {
+                const style = photo.style.backgroundImage;
+                src = style.slice(4, -1).replace(/"/g, "");
+            }
+
+            if (src && !photo.classList.contains('video-wrapper')) {
+                modalImg.src = src;
+                imageModal.classList.add('modal-active');
+            }
+        });
+    });
+
+    // Close the image modal
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            imageModal.classList.remove('modal-active');
+            modalImg.src = "";
+        });
+
+        // Let them click anywhere in the black space to close it too
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('modal-active');
+                modalImg.src = "";
+            }
+        });
+    }
+
+    // Protect modal image from right click
+    if (modalImg) {
+        modalImg.addEventListener('contextmenu', e => e.preventDefault());
     }
 });
