@@ -237,6 +237,21 @@ nav.scrolled {
     border-color: var(--accent-color);
 }
 
+/* Gameplay Video (Small inside card) */
+.gameplay-video-small {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: 1px solid #2a2a36;
+    background-color: #000;
+    outline: none;
+    transition: box-shadow var(--transition-speed);
+}
+
+.hobby-card:hover .gameplay-video-small {
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
 /* Contact / Social Section */
 .social-links {
     display: flex;
