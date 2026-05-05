@@ -55,4 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
     faders.forEach(fader => {
         appearOnScroll.observe(fader);
     });
+
+    // --- NEW: Video Playback Manager ---
+    // Get all small gameplay videos
+    const allVideos = document.querySelectorAll('.gameplay-video-small');
+
+    allVideos.forEach(video => {
+        video.addEventListener('play', () => {
+            // When a video starts playing, pause all OTHER videos
+            allVideos.forEach(otherVideo => {
+                if (otherVideo !== video) {
+                    otherVideo.pause();
+                }
+            });
+        });
+    });
 });

@@ -215,6 +215,7 @@ nav.scrolled {
     gap: 30px;
     width: 100%;
     margin-top: 20px;
+    align-items: stretch; /* Helps keep cards uniform */
 }
 
 .hobby-card {
@@ -225,10 +226,14 @@ nav.scrolled {
     text-align: center;
     transition: all var(--transition-speed);
     cursor: default;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevents video from breaking out */
 }
 
 .hobby-card h3 {
     font-size: 1.2rem;
+    margin-bottom: 15px;
 }
 
 .hobby-card:hover {
@@ -240,7 +245,10 @@ nav.scrolled {
 /* Gameplay Video (Small inside card) */
 .gameplay-video-small {
     width: 100%;
-    margin-top: 15px;
+    height: auto;
+    max-height: 350px; /* Prevents portrait videos from getting too tall */
+    object-fit: cover; /* Ensures video scales nicely within bounds */
+    margin-top: auto; /* Pushes video to the bottom if titles differ in height */
     border-radius: 10px;
     border: 1px solid #2a2a36;
     background-color: #000;
