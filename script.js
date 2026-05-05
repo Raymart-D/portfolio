@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     allVideos.forEach(video => {
         video.addEventListener('play', () => {
-            // When a video starts playing, pause all OTHER videos
             allVideos.forEach(otherVideo => {
                 if (otherVideo !== video) {
                     otherVideo.pause();
@@ -70,4 +69,49 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+
+    // --- EASTER EGG (SECRET VAULT) ---
+    let clickCount = 0;
+    let clickTimer;
+    const logoTrigger = document.getElementById('secret-trigger');
+    const secretVault = document.getElementById('secret-vault');
+    const closeVaultBtn = document.getElementById('close-vault');
+
+    if (logoTrigger && secretVault) {
+        logoTrigger.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            clickCount++;
+
+            if (clickTimer) clearTimeout(clickTimer);
+
+            // Activate Vault on 5 clicks
+            if (clickCount >= 5) {
+                // Instantly pause any playing videos on the main site
+                allVideos.forEach(v => v.pause());
+
+                // Show the vault
+                secretVault.classList.add('vault-active');
+
+                // Prevent scrolling on the main page behind the vault
+                document.body.style.overflow = 'hidden';
+
+                clickCount = 0; 
+            } else {
+                clickTimer = setTimeout(() => {
+                    if (clickCount === 1) {
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
+                    clickCount = 0;
+                }, 1500);
+            }
+        });
+    }
+
+    // Close the vault
+    if (closeVaultBtn && secretVault) {
+        closeVaultBtn.addEventListener('click', () => {
+            secretVault.classList.remove('vault-active');
+            document.body.style.overflow = 'auto'; // allow scrolling again
+        });
+    }
 });

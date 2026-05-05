@@ -211,12 +211,12 @@ nav.scrolled {
 /* Hobbies Section */
 .hobbies-grid {
     display: grid;
-    /* Changes grid from 4-across to 2-across on desktop, keeping it 1-across on mobile */
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 40px;
     width: 100%;
     margin-top: 20px;
-    align-items: stretch; /* Helps keep cards uniform */
+    /* Remove align-items: stretch so cards don't force each other to be the same height */
+    align-items: start; 
 }
 
 .hobby-card {
@@ -229,7 +229,7 @@ nav.scrolled {
     cursor: default;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Prevents video from breaking out */
+    overflow: hidden; 
 }
 
 .hobby-card h3 {
@@ -325,6 +325,258 @@ footer {
 .fade-in-delay {
     transition-delay: 0.2s;
 }
+
+/* --- Easter Egg Theme --- */
+body.easter-egg-mode {
+    --bg-color: #000;
+    --text-color: #0f0;
+    --accent-color: #0f0;
+    --accent-glow: rgba(0, 255, 0, 0.8);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body.easter-egg-mode .glass {
+    background: rgba(0, 255, 0, 0.05);
+    border-color: #0f0;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+body.easter-egg-mode h1, 
+body.easter-egg-mode h2, 
+body.easter-egg-mode h3 {
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0 #000, -1px -1px 0 #0f0;
+}
+
+/* ------------------------ */
+
+/* --- SECRET VAULT (SCRAPBOOK) STYLES --- */
+.vault-hidden {
+    display: none;
+    opacity: 0;
+}
+
+/* When the vault is active, we basically cover the whole screen */
+#secret-vault.vault-active {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Lively but premium gradient background */
+    background: linear-gradient(135deg, #1c103f 0%, #0d1b2a 50%, #1e112a 100%);
+    background-size: 200% 200%;
+    animation: fadeInVault 0.8s ease-in-out, gradientShift 15s ease infinite;
+    z-index: 9999;
+    overflow-y: auto;
+    padding: 50px 20px;
+    opacity: 1;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Magazine Background Typography Watermarks */
+#secret-vault.vault-active::before {
+    content: "LIFE & TIMES";
+    position: fixed;
+    top: 15%;
+    left: -5%;
+    font-size: 14vw;
+    font-weight: 900;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: rgba(123, 44, 191, 0.04); /* Violet subtle tint */
+    white-space: nowrap;
+    transform: rotate(-3deg);
+    z-index: -1;
+    pointer-events: none;
+}
+
+#secret-vault.vault-active::after {
+    content: "VOL. 01";
+    position: fixed;
+    bottom: 10%;
+    right: -2%;
+    font-size: 15vw;
+    font-weight: 900;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: rgba(0, 150, 255, 0.03); /* Blue subtle tint */
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes fadeInVault {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+#close-vault {
+    position: fixed; 
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    background: rgba(123, 44, 191, 0.3); /* Violet tinted button */
+    border: 1px solid rgba(123, 44, 191, 0.6);
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+#close-vault:hover {
+    background: rgba(123, 44, 191, 0.8);
+    box-shadow: 0 0 15px rgba(123, 44, 191, 0.5);
+    transform: translateY(-2px);
+}
+
+.vault-header {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 70px;
+    position: relative;
+    /* Lively Magazine Masthead styling */
+    border-top: 3px solid #7b2cbf;
+    border-bottom: 3px solid #7b2cbf;
+    padding: 30px 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.vault-header h2 {
+    font-size: 4rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 15px;
+    font-family: 'Futura', 'Arial', sans-serif; /* Modern clean font */
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 0px #7b2cbf, -2px -2px 0px #00a8ff; /* 3D Glitch pop color */
+}
+
+.vault-header p {
+    color: #e0e0e0;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Polaroid Photo Album Layout */
+.scrapbook-grid {
+    display: grid;
+    /* Breaking the uniform grid to look more like scattered editorial photos */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+}
+
+.polaroid {
+    /* Playful but premium warm card background */
+    background: linear-gradient(145deg, #ffffff 0%, #f0f4f8 100%); 
+    padding: 12px;
+    border-radius: 8px; /* Slightly softer corners */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    flex-direction: column;
+    /* Soft colored inner border */
+    border: 1px solid rgba(123, 44, 191, 0.1);
+}
+
+/* Creating an asymmetrical editorial gallery layout */
+.polaroid:nth-child(n) { transform: translateY(20px) rotate(-2deg); }
+.polaroid:nth-child(2n) { transform: translateY(-10px) rotate(1deg); }
+.polaroid:nth-child(3n) { transform: translateY(30px) rotate(3deg); }
+.polaroid:nth-child(4n) { transform: translateY(0px) rotate(-1deg); }
+
+.polaroid:hover {
+    transform: scale(1.08) rotate(0deg) translateY(0);
+    z-index: 10;
+    /* Colored glow on hover */
+    box-shadow: 0 20px 40px rgba(123, 44, 191, 0.4);
+}
+
+.photo-placeholder {
+    width: 100%;
+    height: 280px; 
+    /* Soft dark background before the photo loads to contrast the white frame */
+    background-color: #1a1a24; 
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-position: center bottom; 
+    border: none; 
+    border-radius: 4px; /* Matches the softer frame */
+    margin-bottom: 20px;
+}
+
+.caption {
+    color: #111; 
+    text-align: left; /* Editorial alignment */
+    padding: 0 5px;
+}
+
+.caption h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7b2cbf; /* Subtle violet pop */
+    margin-bottom: 2px;
+    border-bottom: 2px solid #f0f0f0; 
+    padding-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.caption p {
+    font-size: 0.85rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 8px;
+}
+
+/* --- Added for the Video Polaroid --- */
+.polaroid-wide {
+    grid-column: 1 / -1; /* Makes the video polaroid stretch across the screen */
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 20px 40px 20px; /* Thicker white borders to look like a true big polaroid */
+    transform: rotate(0deg) !important; /* Keep the video straight */
+}
+
+.polaroid-wide:hover {
+    transform: scale(1.02) !important; /* Smooth zoom without tilting */
+}
+
+.video-wrapper {
+    width: 100%;
+    /* Replaced strict aspect ratio with auto so it hugs the actual video size perfectly */
+    height: auto;
+    background: #000;
+    margin-bottom: 25px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8); /* Inner shadow to make the video pop */
+}
+
+.homies-video {
+    width: 100%;
+    height: auto;
+    display: block; /* Removes tiny margins beneath video elements */
+    border-radius: 2px;
+    outline: none;
+}
+/* --------------------------------------- */
 
 /* Responsive Design */
 @media (max-width: 768px) {
