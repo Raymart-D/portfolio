@@ -110,8 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close the vault
     if (closeVaultBtn && secretVault) {
         closeVaultBtn.addEventListener('click', () => {
-            secretVault.classList.remove('vault-active');
-            document.body.style.overflow = 'auto'; 
+            // First fade out animation
+            secretVault.style.opacity = '0';
+            secretVault.style.transition = 'opacity 0.4s ease';
+
+            // Wait for fade out to finish, then actually remove it from screen
+            setTimeout(() => {
+                secretVault.classList.remove('vault-active');
+                secretVault.style.opacity = ''; // reset inline style
+                secretVault.style.transition = '';
+                document.body.style.overflow = 'auto'; // allow scrolling again
+
+                // Force scroll to top just in case
+                window.scrollTo(0, 0);
+            }, 400); // 400ms delay matches the transition
         });
     }
 
@@ -127,18 +139,22 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); // Disables right click menu (Anti-Save)
         });
 
-        // Click to enlarge (if it's a div with background-image)
-        photo.addEventListener('click', () => {
+        // Click to enlarge (if it's a div with background-image or an img)
+        photo.addEventListener('click', (e) => {
+            // Check to make sure it's not the video wrapper before zooming
+            if(photo.classList.contains('video-wrapper')) return;
+
             let src = "";
-            // Check if it's an img tag or a div with background-image
             if (photo.tagName.toLowerCase() === 'img') {
                 src = photo.src;
             } else {
                 const style = photo.style.backgroundImage;
-                src = style.slice(4, -1).replace(/"/g, "");
+                if(style) {
+                    src = style.slice(5, -2); // Better string slicing to extract URL for mobile browsers
+                }
             }
 
-            if (src && !photo.classList.contains('video-wrapper')) {
+            if (src) {
                 modalImg.src = src;
                 imageModal.classList.add('modal-active');
             }
