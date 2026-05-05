@@ -211,8 +211,9 @@ nav.scrolled {
 /* Hobbies Section */
 .hobbies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    /* Changes grid from 4-across to 2-across on desktop, keeping it 1-across on mobile */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
     width: 100%;
     margin-top: 20px;
     align-items: stretch; /* Helps keep cards uniform */
@@ -232,8 +233,8 @@ nav.scrolled {
 }
 
 .hobby-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
+    font-size: 1.5rem; /* Make titles pop more */
+    margin-bottom: 20px;
 }
 
 .hobby-card:hover {
@@ -246,7 +247,7 @@ nav.scrolled {
 .gameplay-video-small {
     width: 100%;
     height: auto;
-    max-height: 350px; /* Prevents portrait videos from getting too tall */
+    /* Remove strict max-height so width drives the height, removing black bars */
     object-fit: cover; /* Ensures video scales nicely within bounds */
     margin-top: auto; /* Pushes video to the bottom if titles differ in height */
     border-radius: 10px;
